@@ -1,0 +1,21 @@
+RewriteEngine On
+
+RewriteRule ^cv/_133(/|$) - [G]
+
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+
+SetEnvIf Host en.houtsnip.com SITE_LANG=en
+SetEnvIf Host it.houtsnip.com SITE_LANG=it
+SetEnvIf Host nl.houtsnip.com SITE_LANG=nl
+
+SetEnvIf Host en.houtsnip.linode SITE_LANG=en
+SetEnvIf Host it.houtsnip.linode SITE_LANG=it
+SetEnvIf Host nl.houtsnip.linode SITE_LANG=nl
+
