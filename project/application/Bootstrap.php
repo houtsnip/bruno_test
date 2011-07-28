@@ -1,28 +1,65 @@
 <?php
 
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
+class Bootstrap
 {
 
-    public function _initTranslateSetup() {
-        $this->bootstrap('Translate');
-        if (isset($_SERVER['SITE_LANG'])) {
-            $this->getResource('Translate')->getAdapter()
-                ->setLocale($_SERVER['SITE_LANG'])
-                ;
-        }
+    private static $_instance;
+
+    public static function getInstance() {
+        if (!self::$_instance) self::$_instance = new self();
+        return self::$_instance;
     }
 
-    public function _initRouterSetup()
+    protected function _autoloader()
     {
-        $this->bootstrap('FrontController');
-        $this->getResource('FrontController')
-            ->setRouter(new Zend_Controller_Router_Rewrite())
-            ;
+        require_once 'Autoload.php';
+        $autoload = new Autoload();
+        return $this;
     }
 
-    public function _initSessionStart() {
-	$this->bootstrap('Session');
-	Zend_Session::start();
+    protected function _parseRequest()
+    {
+        $this->_request = new Request();
+        return $this;
+    }
+
+    protected function _dispatch()
+    {
+        require_once APPLICATION_PATH . '/controllers/IndexController.php';
+        $controller = new IndexController($this->_request);
+        $action = "{$this->_request->getAction()}Action";
+        $controller->{$action}();
+        return $this;
+    }
+
+    protected function _render()
+    {
+        include APPLICATION_PATH . '/layouts/scripts/layout.phtml';
+        return $this;
+    }
+
+    protected function _getContent()
+    {
+        include APPLICATION_PATH . "/views/scripts/index/{$this->_request->getView()}.phtml";
+    }
+
+    public function getHelper($helper)
+    {
+        if (!isset($this->_helpers[$helper])) {
+            $helperClass = 'App_ViewHelper_' . ucfirst($helper);
+            $this->_helpers[$helper] = new $helperClass($this->_request);
+        }
+        return $this->_helpers[$helper];
+    }
+
+    public function run()
+    {
+        $this
+            ->_autoloader()
+            ->_parseRequest()
+            ->_dispatch()
+            ->_render()
+            ;
     }
 
 }
