@@ -1,0 +1,10 @@
+<p><a href="/">&lt; Go back to list of questions</a></p>
+<?php
+
+$question = $this->getHelper('question')->get();
+
+?>
+<h2>Submit a new answer to the question <em><?php echo htmlspecialchars($question->title); ?></em></h2>
+
+<?php echo $this->getHelper('answerForm')->setObject($this->answer)->render(); ?>
+

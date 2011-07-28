@@ -11,11 +11,20 @@ class App_Model_Answer extends MappableObject
 	switch ($field)
 	{
 	    case 'created_on':
-		return new Date($ret);
+		if ($field) return new Date($ret);
+                break;
+
+            case 'votes':
+                return $ret ?: 0;
 
 	} // end switch
 	return $ret;
     }
 
+    public function save()
+    {
+        if (!$this->created_on) $this->created_on = Date::now();
+        return parent::save();
+    }
 }
 

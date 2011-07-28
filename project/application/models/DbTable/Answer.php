@@ -12,5 +12,7 @@ class App_Model_DbTable_Answer extends Zend_Db_Table_Abstract
 	    )));
     }
 
+    public function getNew() { return new App_Model_Answer($this->createRow()); }
+
 }
 

@@ -23,5 +23,13 @@ class App_Model_Question extends MappableObject
 	return $ret;
     }
 
+    public function getNewAnswer()
+    {
+	$answerGateway = new App_Model_DbTable_Answer();
+	$ret = $answerGateway->getNew();
+        $ret->question_id = $this->id;
+        return $ret;
+    }
+
 }
 

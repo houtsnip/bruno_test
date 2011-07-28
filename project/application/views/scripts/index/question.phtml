@@ -6,6 +6,8 @@ $question = $this->getHelper('question')->get();
 ?>
 <h2><?php echo htmlspecialchars($question->title); ?></h2>
 
+<p><a href="/newanswer/id/<?php echo $question->id; ?>">Submit a new answer to this question</a></p>
+
 <h3>Answers to this question</h3>
 <?php foreach ($question->getAnswers() as $answer) { ?>
     <div style="margin:10px 0; border:1px solid gray; padding:10px;">

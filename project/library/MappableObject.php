@@ -16,6 +16,15 @@ abstract class MappableObject {
         $this->_data = is_array($data) ? $data : $data->toArray();
     }
 
+    public function updateData(array $data)
+    {
+        foreach ($data as $field => $value)
+        {
+            $this->__set($field, $value);
+        } // end foreach
+        return $this;
+    }
+
     abstract protected function _createGateway();
 
     protected function _getGateway()
@@ -24,8 +33,12 @@ abstract class MappableObject {
         return $this->_gateway;
     }
 
-    private function _getMappableData() {
-        return array_diff_key($this->_data, array_fill_keys($this->_nonMappable, null));
+    public function getMappableData() {
+        $ret = array();
+        foreach (array_diff(array_keys($this->_data), $this->_nonMappable) as $field) {
+            $ret[$field] = $this->__get($field);
+        }
+        return $ret;
     }
 
     public function save() {
@@ -35,11 +48,12 @@ abstract class MappableObject {
         } else {
             $record = $this->_getGateway()->createRow();
         }
-        foreach ($this->_getMappableData() as $field => $value)
+        foreach ($this->getMappableData() as $field => $value)
         {
-            $record->{$field} = $value;
+            $record->{$field} = is_object($value) ? (string) $value : $value;
         }
         $record->save();
+        $this->id = $record->id;
         return $this;
     }
 

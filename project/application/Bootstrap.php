@@ -44,8 +44,9 @@ class Bootstrap
 
     protected function _dispatch()
     {
+	$this->_view = new View($this->_request);
         require_once APPLICATION_PATH . '/controllers/IndexController.php';
-        $controller = new IndexController($this->_request);
+        $controller = new IndexController($this->_request, $this->_view);
         $action = "{$this->_request->getAction()}Action";
         $controller->{$action}();
         return $this;
@@ -53,22 +54,8 @@ class Bootstrap
 
     protected function _render()
     {
-        include APPLICATION_PATH . '/layouts/scripts/layout.phtml';
+	$this->_view->render();
         return $this;
-    }
-
-    protected function _getContent()
-    {
-        include APPLICATION_PATH . "/views/scripts/index/{$this->_request->getView()}.phtml";
-    }
-
-    public function getHelper($helper)
-    {
-        if (!isset($this->_helpers[$helper])) {
-            $helperClass = 'App_ViewHelper_' . ucfirst($helper);
-            $this->_helpers[$helper] = new $helperClass($this->_request);
-        }
-        return $this->_helpers[$helper];
     }
 
     public function run()
