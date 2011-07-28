@@ -1,6 +1,17 @@
+<p><a href="/">&lt; Go back to list of questions</a></p>
 <?php
 
 $question = $this->getHelper('question')->get();
 
 ?>
 <h2><?php echo htmlspecialchars($question->title); ?></h2>
+
+<h3>Answers to this question</h3>
+<?php foreach ($question->getAnswers() as $answer) { ?>
+    <div style="margin:10px 0; border:1px solid gray; padding:10px;">
+        <h4><?php echo htmlspecialchars($answer->answer); ?></h4>
+        <p>Submitted on <?php echo $answer->created_on->getFormatted() ?></p>
+        <p><?php echo $answer->votes; ?> votes</p>
+    </div>
+<?php } ?>
+</table>

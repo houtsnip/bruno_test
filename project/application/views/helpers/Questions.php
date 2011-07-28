@@ -9,7 +9,7 @@ class App_ViewHelper_Questions extends ViewHelper
     {
         if (!isset($this->_ret)) {
             $dbTable = new App_Model_DbTable_Question();
-            $this->_ret = new App_Model_QuestionList($dbTable->fetchAll());
+            $this->_ret = $dbTable->getAll();
         }
         return $this->_ret;
     }
