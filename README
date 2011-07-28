@@ -1,0 +1,9 @@
+To set up the site, the project/public directory needs to be the http root.
+
+I have it set up with httpdocs a symlink like so:
+
+private/
+httpdocs -> private/project/public/
+
+If you don't use a symlink like, this you will need to adjust the paths in
+private/project/public/index.php

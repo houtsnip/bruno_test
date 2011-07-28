@@ -26,5 +26,6 @@ class App_Model_Answer extends MappableObject
         if (!$this->created_on) $this->created_on = Date::now();
         return parent::save();
     }
+
 }
 
