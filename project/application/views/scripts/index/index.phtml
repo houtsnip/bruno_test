@@ -13,13 +13,17 @@ $questions = $this->getHelper('Questions')->getQuestions();
     <tr>
         <th>Title</th>
         <th>Description</th>
-        <th>Nickname</th>
+        <th>Asked by</th>
+        <th>Asked on</th>
+        <th>Answers</th>
     </tr>
 <?php foreach ($questions as $question) { ?>
     <tr>
         <th><a href="/question/id/<?php echo $question->id; ?>"><?php echo $question->title; ?></a></th>
-        <td><?php echo $question->description; ?></td>
-        <td><?php echo $question->nickname; ?></td>
+        <td><?php echo htmlspecialchars($question->description); ?></td>
+        <td><?php echo htmlspecialchars($question->nickname); ?></td>
+        <td><?php echo $question->created_on->getFormatted(); ?></td>
+        <td><?php echo $question->num_answers; ?></td>
     </tr>
 <?php } ?>
 </table>

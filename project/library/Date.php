@@ -12,7 +12,7 @@ class Date
     	$this->_date = new DateTime(is_int($date) ? "@$date" : $date);
     }
 
-    public function getFormatted() { return date('M d, Y', $this->_date->getTimestamp()); }
+    public function getFormatted() { return date('M d, Y H.i', $this->_date->getTimestamp()); }
 
     public function __toString() { return date('c', $this->_date->getTimestamp()); }
 }

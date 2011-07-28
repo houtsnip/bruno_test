@@ -6,13 +6,22 @@ $question = $this->getHelper('question')->get();
 ?>
 <h2><?php echo htmlspecialchars($question->title); ?></h2>
 
+<pre style="margin:10px 0; border:1px solid gray; padding:10px;"><?php
+    echo htmlspecialchars($question->description);
+    ?></pre>
+
 <p><a href="/newanswer/id/<?php echo $question->id; ?>">Submit a new answer to this question</a></p>
 
 <h3>Answers to this question</h3>
 <?php foreach ($question->getAnswers() as $answer) { ?>
     <div style="margin:10px 0; border:1px solid gray; padding:10px;">
-        <h4><?php echo htmlspecialchars($answer->answer); ?></h4>
-        <p>Submitted on <?php echo $answer->created_on->getFormatted() ?></p>
+        <p>
+            <strong><?php echo htmlspecialchars($answer->nickname); ?>'s answer</strong>,
+            submitted on <?php echo $answer->created_on->getFormatted(); ?>
+        </p>
+        <pre style="margin:10px 0; border:1px solid gray; padding:10px;"><?php
+            echo htmlspecialchars($answer->answer);
+            ?></pre>
         <p><?php echo $answer->votes; ?> votes</p>
     </div>
 <?php } ?>

@@ -1,10 +1,15 @@
-<p><a href="/">&lt; Go back to list of questions</a></p>
 <?php
 
 $question = $this->getHelper('question')->get();
 
 ?>
+<p><a href="/question/id/<?php echo $question->id; ?>">&lt; Go back to list of answers</a></p>
+
 <h2>Submit a new answer to the question <em><?php echo htmlspecialchars($question->title); ?></em></h2>
+
+<pre style="margin:10px 0; border:1px solid gray; padding:10px;"><?php
+    echo htmlspecialchars($question->description);
+    ?></pre>
 
 <?php echo $this->getHelper('answerForm')->setObject($this->answer)->render(); ?>
 

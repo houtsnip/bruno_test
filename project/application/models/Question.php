@@ -31,5 +31,11 @@ class App_Model_Question extends MappableObject
         return $ret;
     }
 
+    public function save()
+    {
+        if (!$this->created_on) $this->created_on = Date::now();
+        return parent::save();
+    }
+
 }
 
