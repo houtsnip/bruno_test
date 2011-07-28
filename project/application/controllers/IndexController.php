@@ -7,6 +7,10 @@ class IndexController extends Controller
     {
     }
 
+    public function questionAction()
+    {
+    }
+
     public function dumpAction()
     {
         echo '<pre>';

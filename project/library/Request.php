@@ -35,7 +35,7 @@ class Request {
         return $this->_params[$param];
     }
 
-    public function getView() { return strtolower($this->_action); }
+    public function getView() { return strtolower($this->_action) ?: 'index'; }
 
 }
 

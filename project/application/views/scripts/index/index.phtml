@@ -1,1 +1,22 @@
-<?php echo $this->getHelper('test')->test(); ?>
+<h2>Questions</h2>
+
+<?php
+
+$questions = $this->getHelper('Questions')->getQuestions();
+
+?>
+<p>Showing <?php echo $questions->count(); ?> questions</p>
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Nickname</th>
+    </tr>
+<?php foreach ($questions as $question) { ?>
+    <tr>
+        <th><a href="/question/id/<?php echo $question->id; ?>"><?php echo $question->title; ?></a></th>
+        <td><?php echo $question->description; ?></td>
+        <td><?php echo $question->nickname; ?></td>
+    </tr>
+<?php } ?>
+</table>

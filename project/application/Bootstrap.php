@@ -10,10 +10,29 @@ class Bootstrap
         return self::$_instance;
     }
 
+    public function getDb()
+    {
+        if (!isset($this->_db)) $this->_database();
+        return $this->_db;
+    }
+
     protected function _autoloader()
     {
         require_once 'Autoload.php';
         $autoload = new Autoload();
+        return $this;
+    }
+
+    protected function _database()
+    {
+        $this->_db = Zend_Db::factory('Pdo_Mysql', array(
+            'host'     => 'localhost',
+            'username' => 'test_bruno',
+            'password' => 'test_bruno',
+            'dbname'   => 'test_bruno'
+        ));
+        $this->_db->exec("SET NAMES 'utf8'");
+        Zend_Db_Table::setDefaultAdapter($this->_db);
         return $this;
     }
 
@@ -56,6 +75,7 @@ class Bootstrap
     {
         $this
             ->_autoloader()
+            ->_database()
             ->_parseRequest()
             ->_dispatch()
             ->_render()
